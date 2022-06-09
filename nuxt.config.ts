@@ -9,6 +9,7 @@ export default defineNuxtConfig({
 	css: [
 		'vuetify/lib/styles/main.sass',
 		'mdi/css/materialdesignicons.min.css',
+    '~/assets/sass/main.scss'
 	],
 	build: {
 		transpile: ['vuetify'],
@@ -27,4 +28,8 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     ['cookie-universal-nuxt', { alias: 'cookies' }],
   ],
+  vuetify: {
+    customVariables: ['~/assets/sass/variables.scss'],
+    treeShake: true
+  },
 })
