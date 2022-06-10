@@ -1,19 +1,20 @@
 import { useUserStore } from '~~/store/user'
-
+interface gsiResponse{
+  clientId: string,
+  credential: string,
+  select_by: string
+}
 export default defineNuxtPlugin(() => {
   return {
     provide: {
       'auth': {
-        signInGoogle: async (jwt: string) => {
+        signInGoogle: async (res: gsiResponse) => {
           var pearlBoxJwt = await useFetch('http://icanhazip.com')
           console.log(pearlBoxJwt.data.value)
         
           const userStore = useUserStore()
-          userStore.setJwt(jwt)
-        
-          //localStorage.setItem('pearlBoxJwt', jwt)
-          //const router = useRouter()
-          //router.push('/')
+          userStore.setJwt(res.credential)
+          
           navigateTo('/')
         },
       }

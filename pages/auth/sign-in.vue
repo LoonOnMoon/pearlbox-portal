@@ -30,33 +30,28 @@
 const { $auth } = useNuxtApp()
 const config = useRuntimeConfig()
 
-function signIn(res){
-  $auth.signInGoogle(res.credential)
-}
+useHead({
+  title: `${config.VUE_APP_NAME} - Sign in`,
+  script: [{ src: 'https://accounts.google.com/gsi/client', async: true, defer: true}]
+})
 onBeforeMount(() => {
   // @ts-ignore
   window.google.accounts.id.initialize({
     // @ts-ignore
     client_id: config.VUE_APP_GSI_CLIENT_ID,
     // @ts-ignore
-    callback: signIn,
+    callback: $auth.signInGoogle,
   })
 })
-
-const isSignIn = ref(true)
-
-function toggleSignIn(){
-  isSignIn.value = !isSignIn.value
-}
-
 definePageMeta({
   layout: false,
 })
-useMeta({
-  title: `${config.VUE_APP_NAME} - Sign in`,
-  script: [{ src: 'https://accounts.google.com/gsi/client', async: true, defer: true}]
-})
 
+// Vue state
+const isSignIn = ref(true)
+function toggleSignIn(){
+  isSignIn.value = !isSignIn.value
+}
 </script>
 
 <style scoped lang="scss">
